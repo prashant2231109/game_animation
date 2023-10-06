@@ -1,0 +1,35 @@
+#bg{
+    height:400%;
+    width:100%;
+}
+section{
+    background-image: url("bg.jpeg");
+    background-size: cover;
+    height:98vh;
+}
+
+#character{
+    position:absolute;
+    bottom:-45px;
+    left:50px;
+    height:430px;
+    width:300px;
+}
+#character1{
+        position:absolute;
+        bottom:0;
+        right:50px;
+        height:390px;
+        width:300px;
+}
+#net{
+    position:absolute;
+    bottom:0;
+    height:500px;
+    margin-top:200px; 
+    margin-left:20%;
+    /* margin-right: 40%; */
+    /* width:10px; */
+}
+    
+
