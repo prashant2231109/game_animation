@@ -19,6 +19,40 @@ function moveCharacterBackward() {
     }
 }
 
+let jumpHeight = 0;
+let isJumping = false;
+
+function movecharacterjump(){
+        isJumping = true;
+        
+        const jumpInterval = setInterval(() => {
+            character.style.bottom = jumpHeight + "px";
+            jumpHeight += 5;
+            
+            if (jumpHeight >= 100) {
+                clearInterval(jumpInterval);
+                const fallInterval = setInterval(() => {
+                    character.style.bottom = jumpHeight + "px";
+                    jumpHeight -= 5;
+                    if (jumpHeight <= 0) {
+                        character.style.bottom = "-45px";
+                        isJumping = false;
+                        clearInterval(fallInterval);
+                    }
+                }, 5);
+            }
+        }, 5);
+    }
+
+//  var bool=true;
+
+document.addEventListener("keyup", function(event) {
+    if(event.key==="ArrowUp"){
+            movecharacterjump();
+        
+    }
+});
+
 document.addEventListener("keydown", function(event) {
     if (event.key === "ArrowRight") {
         moveCharacterForward();
@@ -26,6 +60,7 @@ document.addEventListener("keydown", function(event) {
         moveCharacterBackward();
     }
 });
+
 const character1 = document.getElementById("character1");
 let character1rightPosition = 50;
 function moveCharacter1Forward() {
@@ -42,15 +77,48 @@ function moveCharacter1Backward() {
     character1.style.right = character1rightPosition + "px";
     }
 }
+let jumpHeight1=0;
+let isJumping1 = false;
+function movecharacter1jump(){
+      isJumping1 = true;
+    
+    const jumpInterval1 = setInterval(() => {
+        character1.style.bottom = jumpHeight1 + "px";
+        jumpHeight1 += 5;
+        
+        if (jumpHeight1 >= 100) {
+            clearInterval(jumpInterval1);
+            const fallInterval1 = setInterval(() => {
+                character1.style.bottom = jumpHeight1 + "px";
+                jumpHeight1 -= 5;
+                if (jumpHeight1 <= 0) {
+                    character1.style.bottom = "0px";
+                    isJumping1 = false;
+                    clearInterval(fallInterval1);
+                }
+            }, 5);
+        }
+    }, 5);
+}
+
+
 
 document.addEventListener("keydown", function(event) {
-    if (event.key === "w") {
+    if (event.key === "a") {
         moveCharacter1Forward();
     } 
-    else if (event.key === "s") {
+    else if (event.key === "d") {
         moveCharacter1Backward();
     }
+
 });
+document.addEventListener("keyup", function(event) {
+        if(event.key=== "w"){
+                movecharacter1jump();    
+        }
+});
+
+
 
 
 
