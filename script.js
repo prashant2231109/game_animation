@@ -134,13 +134,11 @@ function updateBallPosition() {
     if (ballPositionX + ball.offsetWidth >= screenWidth1 || ballPositionX <= 0) {
         ballSpeedX = -ballSpeedX;
     }
-
-    // Bounce the ball off the top and bottom edges of the screen
     if (ballPositionY + ball.offsetHeight >= screenHeight || ballPositionY <= 0) {
         ballSpeedY = -ballSpeedY;
     }
 
-    // Check if the ball hits character
+    
     if (
         ballPositionY + ball.offsetHeight >= character.offsetTop &&
         ballPositionX + ball.offsetWidth >= character.offsetLeft &&
@@ -149,7 +147,7 @@ function updateBallPosition() {
         ballSpeedY = -ballSpeedY;
     }
 
-    // Check if the ball hits character1
+    
     if (
         ballPositionY + ball.offsetHeight >= character1.offsetTop &&
         ballPositionX + ball.offsetWidth >= character1.offsetLeft &&
@@ -157,24 +155,10 @@ function updateBallPosition() {
     ) {
         ballSpeedY = -ballSpeedY;
     }
-
-    // Check if the ball hits the bottom edge of the screen
-    if (ballPositionY + ball.offsetHeight >= screenHeight) {
-        // Reset the ball to its initial position
-        ballPositionX = screenWidth1 / 2;
-        ballPositionY = screenHeight / 2;
-        ballSpeedY = 5; // Reset vertical speed
-    }
-
-    // Update the ball's position on the screen
     ball.style.left = ballPositionX + "px";
     ball.style.top = ballPositionY + "px";
-
-    // Repeat the update in the next animation frame
     requestAnimationFrame(updateBallPosition);
 }
-
-// Start the game loop
 updateBallPosition();
 
 
