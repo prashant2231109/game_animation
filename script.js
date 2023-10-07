@@ -1,7 +1,7 @@
 const character = document.getElementById("character");
 const moveSpeed = 5;
 let characterleftPosition = 50;
-const screenWidth = (window.innerWidth)/2.3;
+const screenWidth = (window.innerWidth)/2.25;
 const characterWidth = character.clientWidth;
 
 function moveCharacterForward() {
@@ -43,9 +43,6 @@ function movecharacterjump(){
             }
         }, 5);
     }
-
-//  var bool=true;
-
 document.addEventListener("keyup", function(event) {
     if(event.key==="ArrowUp"){
             movecharacterjump();
@@ -117,6 +114,72 @@ document.addEventListener("keyup", function(event) {
                 movecharacter1jump();    
         }
 });
+
+const ball = document.getElementById("ball");
+let ballPositionX = 50; // Initial X position of the ball
+let ballPositionY = 50; // Initial Y position of the ball
+let ballSpeedX = 2; // Horizontal speed of the ball
+let ballSpeedY = 5; // Vertical speed of the ball
+
+// Define the screen width and height
+const screenWidth1 = window.innerWidth;
+const screenHeight = window.innerHeight;
+
+function updateBallPosition() {
+    // Update ball's position
+    ballPositionX += ballSpeedX;
+    ballPositionY += ballSpeedY;
+
+    // Bounce the ball off the left and right edges of the screen
+    if (ballPositionX + ball.offsetWidth >= screenWidth1 || ballPositionX <= 0) {
+        ballSpeedX = -ballSpeedX;
+    }
+
+    // Bounce the ball off the top and bottom edges of the screen
+    if (ballPositionY + ball.offsetHeight >= screenHeight || ballPositionY <= 0) {
+        ballSpeedY = -ballSpeedY;
+    }
+
+    // Check if the ball hits character
+    if (
+        ballPositionY + ball.offsetHeight >= character.offsetTop &&
+        ballPositionX + ball.offsetWidth >= character.offsetLeft &&
+        ballPositionX <= character.offsetLeft + character.offsetWidth
+    ) {
+        ballSpeedY = -ballSpeedY;
+    }
+
+    // Check if the ball hits character1
+    if (
+        ballPositionY + ball.offsetHeight >= character1.offsetTop &&
+        ballPositionX + ball.offsetWidth >= character1.offsetLeft &&
+        ballPositionX <= character1.offsetLeft + character1.offsetWidth
+    ) {
+        ballSpeedY = -ballSpeedY;
+    }
+
+    // Check if the ball hits the bottom edge of the screen
+    if (ballPositionY + ball.offsetHeight >= screenHeight) {
+        // Reset the ball to its initial position
+        ballPositionX = screenWidth1 / 2;
+        ballPositionY = screenHeight / 2;
+        ballSpeedY = 5; // Reset vertical speed
+    }
+
+    // Update the ball's position on the screen
+    ball.style.left = ballPositionX + "px";
+    ball.style.top = ballPositionY + "px";
+
+    // Repeat the update in the next animation frame
+    requestAnimationFrame(updateBallPosition);
+}
+
+// Start the game loop
+updateBallPosition();
+
+
+
+
 
 
 
