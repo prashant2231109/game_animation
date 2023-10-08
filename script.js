@@ -1,7 +1,7 @@
 
 const character = document.getElementById("character");
 const net = document.getElementById("net");
-const moveSpeed = 7;
+const moveSpeed = 15;
 let characterleftPosition = 50;
 const screenWidth = (window.innerWidth)/2.25;
 const characterWidth = character.clientWidth;
@@ -137,10 +137,10 @@ let ballPositionY = initialBallPositionY ;
 function updateBallPosition() {
     ballPositionX += ballSpeedX;
     ballPositionY += ballSpeedY;   
-    if (ballPositionX + ball.offsetWidth >= screenWidth1 || ballPositionX <= 0){
+    if (ballPositionX + ball.offsetWidth > screenWidth1 || ballPositionX <= 0){
         ballSpeedX = -ballSpeedX;   
     }
-    if (ballPositionY + ball.offsetHeight >= screenHeight || ballPositionY <= 0) {
+    if (ballPositionY + ball.offsetHeight > screenHeight || ballPositionY <= 0) {
         ballSpeedY = -ballSpeedY;
     }
 
@@ -153,16 +153,16 @@ if (
   const ballCenterX = ballPositionX + ball.offsetWidth / 2;
   const characterCenterX = character.offsetLeft + character.clientWidth / 2;
   const direction = ballCenterX > characterCenterX ? 1 : -1;
-  const characterTopHalf = character.offsetTop + character.clientHeight / 4;
+  const characterTopHalf = character.offsetTop + character.clientHeight / 3;
   if (ballPositionY + ball.offsetHeight <= characterTopHalf) {
-      ballSpeedY = -Math.abs(ballSpeedY)*1.2; 
+      ballSpeedY = -Math.abs(ballSpeedY); 
   }
    else {
       const collisionPoint = character.offsetTop + character.clientHeight - ballPositionY;
-      ballSpeedY = Math.abs(ballSpeedY) 
+      ballSpeedY = Math.abs(ballSpeedY)*2; 
   }
 
-  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.5); 
+  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.3); 
 }
   
   
@@ -176,7 +176,7 @@ if (
       const character1CenterX = character1.offsetLeft + character1.clientWidth / 2;
       const direction = ballCenterX > character1CenterX ? 1 : -1;
   
-      const character1TopHalf = character1.offsetTop + character1.clientHeight / 4;
+      const character1TopHalf = character1.offsetTop + character1.clientHeight / 3;
 
   if (ballPositionY + ball.offsetHeight <= character1TopHalf) {
       const collisionPoint = ballPositionY + ball.offsetHeight - character1.offsetTop;
@@ -187,7 +187,7 @@ if (
       ballSpeedY = Math.abs(ballSpeedY)*1.2; 
   }
 
-  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.5);
+  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.3);
   }
   else if (
       ballPositionY + ball.offsetHeight >= net.offsetTop &&
@@ -200,18 +200,18 @@ if (
       const netCenterX = net.offsetLeft + net.clientWidth / 2;
       const direction = ballCenterX > netCenterX ? 1 : -1;
   
-      const netTopHalf = net.offsetTop + net.clientHeight / 2;
+      const netTopHalf = net.offsetTop + net.clientHeight / 4;
 
-  if (ballPositionY + ball.offsetHeight >= netTopHalf) {
+  if (ballPositionY + ball.offsetHeight <= netTopHalf) {
   
-      ballSpeedY = -Math.abs(ballSpeedY)*1.2; 
+      ballSpeedY = -Math.abs(ballSpeedY); 
   } 
   else {
      
-      ballSpeedY = Math.abs(ballSpeedY); 
+      ballSpeedY = Math.abs(ballSpeedY)*1.2; 
   }
 
-  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.5); 
+  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.2); 
   }
   // Inside your collision detection code
 
