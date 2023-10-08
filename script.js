@@ -213,44 +213,36 @@ if (
 
   ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.2); 
   }
-  // Inside your collision detection code
 
-// if (ballPositionY + ball.offsetHeight >= screenHeight) {
-//   // Ball touches the ground, opponent gains one point
-//   if (ballPositionX < screenWidth1 / 2) {
-//       // Ball on player 1's side
-//       player2Score++;
-//       document.getElementById("player2Score").textContent = "Player 2: " + player2Score;
-//   } else {
-//       // Ball on player 2's side
-//       player1Score++;
-//       document.getElementById("player1Score").textContent = "Player 1: " + player1Score;
-//   }
 
-//   // Check if either player has reached the winning score
-//   if (player1Score >= winningScore || player2Score >= winningScore) {
-//       // One of the players has won, reset the game
-//       player1Score = 0;
-//       player2Score = 0;
-//       document.getElementById("player1Score").textContent = "Player 1: 0";
-//       document.getElementById("player2Score").textContent = "Player 2: 0";
+if (ballPositionY + ball.offsetHeight >= screenHeight) {
+  if (ballPositionX < screenWidth1 / 2) {
+      player2Score++;
+      document.getElementById("player2Score").textContent = "Player 2: " + player2Score;
+  } else {
+      player1Score++;
+      document.getElementById("player1Score").textContent = "Player 1: " + player1Score;
+  }
+
+  if (player1Score >= winningScore || player2Score >= winningScore) {
+      player1Score = 0;
+      player2Score = 0;
+      document.getElementById("player1Score").textContent = "Player 1: 0";
+      document.getElementById("player2Score").textContent = "Player 2: 0";
       
-//       // Reset the ball's position and speed to initial values
-//       ballPositionX = initialBallPositionX;
-//       ballPositionY = initialBallPositionY;
-//       ballSpeedX = initialBallSpeedX;
-//       ballSpeedY = initialBallSpeedY;
-//   } 
-//   else {
-//       // Reset the ball's position to initial values
-//       ballPositionX = initialBallPositionX;
-//       ballPositionY = initialBallPositionY;
+      ballPositionX = initialBallPositionX;
+      ballPositionY = initialBallPositionY;
+      ballSpeedX = initialBallSpeedX;
+      ballSpeedY = initialBallSpeedY;
+  } 
+  else {
+      ballPositionX = initialBallPositionX;
+      ballPositionY = initialBallPositionY;
       
-//       // Decrease the ball's speed to initial values
-//       ballSpeedX = initialBallSpeedX;
-//       ballSpeedY = initialBallSpeedY;
-//   }
-// }
+      ballSpeedX = initialBallSpeedX;
+      ballSpeedY = initialBallSpeedY;
+  }
+}
   ball.style.left = ballPositionX + "px";
   ball.style.top = ballPositionY + "px";
   requestAnimationFrame(updateBallPosition);
