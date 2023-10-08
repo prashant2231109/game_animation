@@ -1,8 +1,13 @@
+
 const character = document.getElementById("character");
-const moveSpeed = 5;
+const net = document.getElementById("net");
+const moveSpeed = 7;
 let characterleftPosition = 50;
 const screenWidth = (window.innerWidth)/2.25;
 const characterWidth = character.clientWidth;
+let player1Score = 0;
+let player2Score = 0;
+const winningScore = 10; // Adjust as needed
 
 function moveCharacterForward() {
     if(characterleftPosition + characterWidth + moveSpeed <= screenWidth)
@@ -35,7 +40,7 @@ function movecharacterjump(){
                     character.style.bottom = jumpHeight + "px";
                     jumpHeight -= 5;
                     if (jumpHeight <= 0) {
-                        character.style.bottom = "-45px";
+                        character.style.bottom = "0px";
                         isJumping = false;
                         clearInterval(fallInterval);
                     }
@@ -116,50 +121,142 @@ document.addEventListener("keyup", function(event) {
 });
 
 const ball = document.getElementById("ball");
-let ballPositionX = 50; // Initial X position of the ball
-let ballPositionY = 50; // Initial Y position of the ball
-let ballSpeedX = 2; // Horizontal speed of the ball
-let ballSpeedY = 5; // Vertical speed of the ball
-
-// Define the screen width and height
+const initialBallSpeedX = 4;
+const initialBallSpeedY = 4;
+let ballSpeedX = 4; 
+let ballSpeedY = 4; 
 const screenWidth1 = window.innerWidth;
 const screenHeight = window.innerHeight;
-
+const minPositionX=0;
+const maxPositionX=screenWidth ;
+const randomPositionX=Math.random() * (maxPositionX - minPositionX) + minPositionX;
+let initialBallPositionX = randomPositionX;
+const initialBallPositionY = 0;
+let ballPositionX = initialBallPositionX; 
+let ballPositionY = initialBallPositionY ;
 function updateBallPosition() {
-    // Update ball's position
     ballPositionX += ballSpeedX;
-    ballPositionY += ballSpeedY;
-
-    // Bounce the ball off the left and right edges of the screen
-    if (ballPositionX + ball.offsetWidth >= screenWidth1 || ballPositionX <= 0) {
-        ballSpeedX = -ballSpeedX;
+    ballPositionY += ballSpeedY;   
+    if (ballPositionX + ball.offsetWidth >= screenWidth1 || ballPositionX <= 0){
+        ballSpeedX = -ballSpeedX;   
     }
     if (ballPositionY + ball.offsetHeight >= screenHeight || ballPositionY <= 0) {
         ballSpeedY = -ballSpeedY;
     }
 
-    
-    if (
-        ballPositionY + ball.offsetHeight >= character.offsetTop &&
-        ballPositionX + ball.offsetWidth >= character.offsetLeft &&
-        ballPositionX <= character.offsetLeft + character.offsetWidth
-    ) {
-        ballSpeedY = -ballSpeedY;
-    }
+if (
+  ballPositionY + ball.offsetHeight >= character.offsetTop &&
+  ballPositionY <= character.offsetTop + character.clientHeight &&
+  ballPositionX + ball.offsetWidth >= character.offsetLeft &&
+  ballPositionX <= character.offsetLeft + character.clientWidth
+) {
+  const ballCenterX = ballPositionX + ball.offsetWidth / 2;
+  const characterCenterX = character.offsetLeft + character.clientWidth / 2;
+  const direction = ballCenterX > characterCenterX ? 1 : -1;
+  const characterTopHalf = character.offsetTop + character.clientHeight / 4;
+  if (ballPositionY + ball.offsetHeight <= characterTopHalf) {
+      ballSpeedY = -Math.abs(ballSpeedY)*1.2; 
+  }
+   else {
+      const collisionPoint = character.offsetTop + character.clientHeight - ballPositionY;
+      ballSpeedY = Math.abs(ballSpeedY) 
+  }
 
+  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.5); 
+}
+  
+  
+  else if (
+      ballPositionY + ball.offsetHeight >= character1.offsetTop &&
+      ballPositionY <= character1.offsetTop + character1.clientHeight &&
+      ballPositionX + ball.offsetWidth >= character1.offsetLeft &&
+      ballPositionX <= character1.offsetLeft + character1.clientWidth
+  ) {
+      const ballCenterX = ballPositionX + ball.offsetWidth / 2;
+      const character1CenterX = character1.offsetLeft + character1.clientWidth / 2;
+      const direction = ballCenterX > character1CenterX ? 1 : -1;
+  
+      const character1TopHalf = character1.offsetTop + character1.clientHeight / 4;
+
+  if (ballPositionY + ball.offsetHeight <= character1TopHalf) {
+      const collisionPoint = ballPositionY + ball.offsetHeight - character1.offsetTop;
+      ballSpeedY = -Math.abs(ballSpeedY); 
+  } 
+  else {
+      const collisionPoint = character1.offsetTop + character1.clientHeight - ballPositionY;
+      ballSpeedY = Math.abs(ballSpeedY)*1.2; 
+  }
+
+  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.5);
+  }
+  else if (
+      ballPositionY + ball.offsetHeight >= net.offsetTop &&
+      ballPositionY <= net.offsetTop + net.clientHeight &&
+      ballPositionX + ball.offsetWidth >= net.offsetLeft &&
+      ballPositionX <= net.offsetLeft + net.clientWidth
+  ) {
     
-    if (
-        ballPositionY + ball.offsetHeight >= character1.offsetTop &&
-        ballPositionX + ball.offsetWidth >= character1.offsetLeft &&
-        ballPositionX <= character1.offsetLeft + character1.offsetWidth
-    ) {
-        ballSpeedY = -ballSpeedY;
-    }
-    ball.style.left = ballPositionX + "px";
-    ball.style.top = ballPositionY + "px";
-    requestAnimationFrame(updateBallPosition);
+      const ballCenterX = ballPositionX + ball.offsetWidth / 2;
+      const netCenterX = net.offsetLeft + net.clientWidth / 2;
+      const direction = ballCenterX > netCenterX ? 1 : -1;
+  
+      const netTopHalf = net.offsetTop + net.clientHeight / 2;
+
+  if (ballPositionY + ball.offsetHeight >= netTopHalf) {
+  
+      ballSpeedY = -Math.abs(ballSpeedY)*1.2; 
+  } 
+  else {
+     
+      ballSpeedY = Math.abs(ballSpeedY); 
+  }
+
+  ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.5); 
+  }
+  // Inside your collision detection code
+
+// if (ballPositionY + ball.offsetHeight >= screenHeight) {
+//   // Ball touches the ground, opponent gains one point
+//   if (ballPositionX < screenWidth1 / 2) {
+//       // Ball on player 1's side
+//       player2Score++;
+//       document.getElementById("player2Score").textContent = "Player 2: " + player2Score;
+//   } else {
+//       // Ball on player 2's side
+//       player1Score++;
+//       document.getElementById("player1Score").textContent = "Player 1: " + player1Score;
+//   }
+
+//   // Check if either player has reached the winning score
+//   if (player1Score >= winningScore || player2Score >= winningScore) {
+//       // One of the players has won, reset the game
+//       player1Score = 0;
+//       player2Score = 0;
+//       document.getElementById("player1Score").textContent = "Player 1: 0";
+//       document.getElementById("player2Score").textContent = "Player 2: 0";
+      
+//       // Reset the ball's position and speed to initial values
+//       ballPositionX = initialBallPositionX;
+//       ballPositionY = initialBallPositionY;
+//       ballSpeedX = initialBallSpeedX;
+//       ballSpeedY = initialBallSpeedY;
+//   } 
+//   else {
+//       // Reset the ball's position to initial values
+//       ballPositionX = initialBallPositionX;
+//       ballPositionY = initialBallPositionY;
+      
+//       // Decrease the ball's speed to initial values
+//       ballSpeedX = initialBallSpeedX;
+//       ballSpeedY = initialBallSpeedY;
+//   }
+// }
+  ball.style.left = ballPositionX + "px";
+  ball.style.top = ballPositionY + "px";
+  requestAnimationFrame(updateBallPosition);
 }
 updateBallPosition();
+
 
 
 

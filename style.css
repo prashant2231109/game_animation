@@ -1,35 +1,74 @@
+
 section{
+    position:absolute;
     background-image: url("bg.jpeg");
     background-size: cover;
     height:100vh;
+    width:100vw;
+    bottom:0px;
+    
 }
 
 #character{
     position:absolute;
-    bottom:-45px;
+   bottom:0;
+   margin-top:24%;
     left:50px;
-    height:430px;
-    width:300px;
+    height:268px;
+    width: 134px;
+  
 }
 #character1{
         position:absolute;
-        bottom:0;
+        bottom:0px;
         right:50px;
-        height:350px;
-        width:200px;
+        height:268px;
+        width: 134px;
+       
+    
 }
 #net{
     position:absolute;
-    bottom:0;
-    height:500px;
-    margin-top:200px; 
-    margin-left:20%;
+    bottom: 0;
+    height:50%;
+    width:30px;
+    margin-top:22%; 
+    margin-left:50%;
+    background-color: aliceblue;
 }
 #ball{
     position:absolute;
     height:80px;
     width:80px;
-    bottom:50px;
+    bottom:0px;
 }
     
+/* h1{font-size: 55px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+} */
+/* #player1Score{
+    margin-left: 50px;
+    font-size: 40px;
+    margin-top:40px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+#player2Score{
+    font-weight: bolder;
+    margin-top:40px;
+    font-size: 40px;
+    margin-left: 550px;
+    /* margin-top:40px; */
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+
+
+#score{
+    display:flex;
+    justify-content: space-evenly;
+    margin-top:150px;
+    font-size: 30px;
+    font-weight: bolder;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+} 
 
