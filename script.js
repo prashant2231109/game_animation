@@ -7,8 +7,26 @@ const characterWidth = character.clientWidth;
 let player1Score = 0;
 let player2Score = 0;
 const winningScore = 10; 
-
-
+const collisionsound = document.getElementById("collisionSound");
+const jumpsound = document.getElementById("jump");
+const pointersound = document.getElementById("point");
+const headhitsound = document.getElementById("headsound");
+function playjumpsound() {
+    jumpsound.currentTime = 0;
+    jumpsound.play();
+}
+function playcollisionsound() {
+    collisionsound.currentTime = 0;
+    collisionsound.play();
+}
+function playpointersound() {
+    pointersound.currentTime = 0;
+    pointersound.play();
+}
+function headsounds() {
+    headhitsound.currentTime = 0;
+    headhitsound.play();
+}
 function moveCharacterForward() {
     if (characterleftPosition + characterWidth + moveSpeed <= screenWidth) {
         characterleftPosition += moveSpeed;
@@ -49,7 +67,7 @@ function movecharacterjump() {
 }
 document.addEventListener("keyup", function (event) {
     if (event.key === "w") {
-        
+        playjumpsound();
         movecharacterjump();
 
     }
@@ -115,7 +133,7 @@ document.addEventListener("keydown", function (event) {
 });
 document.addEventListener("keyup", function (event) {
     if (event.key === "ArrowUp") {
-        
+        playjumpsound();
         movecharacter1jump();
     }
 });
@@ -148,13 +166,13 @@ function updateBallPosition() {
         return; 
     }
 
-    const maxBallSpeed = 12;
-    if (Math.abs(ballSpeedX) > maxBallSpeed) {
-        ballSpeedX = maxBallSpeed * Math.sign(ballSpeedX);
-    }
-    if (Math.abs(ballSpeedY) > maxBallSpeed) {
-        ballSpeedY = maxBallSpeed * Math.sign(ballSpeedY);
-    }
+    // const maxBallSpeed = 12;
+    // if (Math.abs(ballSpeedX) > maxBallSpeed) {
+    //     ballSpeedX = maxBallSpeed * Math.sign(ballSpeedX);
+    // }
+    // if (Math.abs(ballSpeedY) > maxBallSpeed) {
+    //     ballSpeedY = maxBallSpeed * Math.sign(ballSpeedY);
+    // }
     ballPositionX += ballSpeedX;
     ballPositionY += ballSpeedY;
     
@@ -184,11 +202,11 @@ function updateBallPosition() {
         if (ballPositionY + ball.offsetHeight <= characterTopHalf) {
 
             ballSpeedY = -Math.abs(ballSpeedY);
+            headsounds();
             
 
         } else {
             
-            const collisionPoint = character.offsetTop + character.clientHeight - ballPositionY;
             
             ballSpeedY = Math.abs(ballSpeedY) * 2 ;
         }
@@ -209,11 +227,11 @@ function updateBallPosition() {
         const character1TopHalf = character1.offsetTop + character1.clientHeight / 3;
 
         if (ballPositionY + ball.offsetHeight <= character1TopHalf) {
-            const collisionPoint = ballPositionY + ball.offsetHeight - character1.offsetTop;
+            
             ballSpeedY = -Math.abs(ballSpeedY);
+            headsounds();
     
         } else {
-            const collisionPoint = character1.offsetTop + character1.clientHeight - ballPositionY;
             ballSpeedY = Math.abs(ballSpeedY) * 1.2; 
         }
 
@@ -235,13 +253,13 @@ function updateBallPosition() {
 
         if (ballPositionY + ball.offsetHeight <= netTopHalf) {
           
-        
+            playcollisionsound();
             ballSpeedY = -Math.abs(ballSpeedY) * 1.5; 
 
 
         } else {
            
-            
+            playcollisionsound();
             ballSpeedY = Math.abs(ballSpeedY) * 1.5; 
 
         }
@@ -268,11 +286,11 @@ function updateBallPosition() {
     if (ballPositionY + ball.offsetHeight >= screenHeight) {
 
         if (ballPositionX < screenWidth1 / 2) {
-            
+            playpointersound();
             player2Score++;
             document.getElementById("player2Score").textContent = "Player 2: " + player2Score;
         } else {
-            
+            playpointersound();
             player1Score++;
             document.getElementById("player1Score").textContent = "Player 1: " + player1Score;
         }
