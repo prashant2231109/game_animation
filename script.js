@@ -2,7 +2,7 @@
 const character = document.getElementById("character");
 const net = document.getElementById("net");
 const moveSpeed = 15;
-let characterleftPosition = 50;
+let characterleftPosition = 60;
 const screenWidth = (window.innerWidth)/2.25;
 const characterWidth = character.clientWidth;
 let player1Score = 0;
@@ -49,22 +49,22 @@ function movecharacterjump(){
         }, 5);
     }
 document.addEventListener("keyup", function(event) {
-    if(event.key==="ArrowUp"){
+    if(event.key==="w"){
             movecharacterjump();
         
     }
 });
 
 document.addEventListener("keydown", function(event) {
-    if (event.key === "ArrowRight") {
+    if (event.key === "d") {
         moveCharacterForward();
-    } else if (event.key === "ArrowLeft") {
+    } else if (event.key === "a") {
         moveCharacterBackward();
     }
 });
 
 const character1 = document.getElementById("character1");
-let character1rightPosition = 50;
+let character1rightPosition = 60;
 function moveCharacter1Forward() {
     if(character1rightPosition + characterWidth + moveSpeed <= screenWidth)
     {
@@ -106,16 +106,16 @@ function movecharacter1jump(){
 
 
 document.addEventListener("keydown", function(event) {
-    if (event.key === "a") {
+    if (event.key === "ArrowLeft") {
         moveCharacter1Forward();
     } 
-    else if (event.key === "d") {
+    else if (event.key === "ArrowRight") {
         moveCharacter1Backward();
     }
 
 });
 document.addEventListener("keyup", function(event) {
-        if(event.key=== "w"){
+        if(event.key=== "ArrowUp"){
                 movecharacter1jump();    
         }
 });
@@ -128,7 +128,7 @@ let ballSpeedY = 4;
 const screenWidth1 = window.innerWidth;
 const screenHeight = window.innerHeight;
 const minPositionX=0;
-const maxPositionX=screenWidth ;
+const maxPositionX=screenWidth1 ;
 const randomPositionX=Math.random() * (maxPositionX - minPositionX) + minPositionX;
 let initialBallPositionX = randomPositionX;
 const initialBallPositionY = 0;
@@ -137,11 +137,11 @@ let ballPositionY = initialBallPositionY ;
 function updateBallPosition() {
     ballPositionX += ballSpeedX;
     ballPositionY += ballSpeedY;   
-    if (ballPositionX + ball.offsetWidth > screenWidth1 || ballPositionX <= 0){
-        ballSpeedX = -ballSpeedX;   
+    if (ballPositionX + ball.offsetWidth > screenWidth1 || ballPositionX <= 10){
+        ballSpeedX = -ballSpeedX * 1.05;   
     }
     if (ballPositionY + ball.offsetHeight > screenHeight || ballPositionY <= 0) {
-        ballSpeedY = -ballSpeedY;
+        ballSpeedY = -ballSpeedY * 1.05;
     }
 
 if (
@@ -204,15 +204,31 @@ if (
 
   if (ballPositionY + ball.offsetHeight <= netTopHalf) {
   
-      ballSpeedY = -Math.abs(ballSpeedY); 
+      ballSpeedY = -Math.abs(ballSpeedY) * 1.5; 
   } 
   else {
      
-      ballSpeedY = Math.abs(ballSpeedY)*1.2; 
+      ballSpeedY = Math.abs(ballSpeedY)*1.5; 
   }
 
   ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.2); 
   }
+  function resetballposition() {
+    randomPositionX = Math.random() * (maxPositionX - minPositionX) + minPositionX;
+    initialBallPositionX = randomPositionX;
+    ballPositionX = initialBallPositionX;
+    ballPositionY = initialBallPositionY;
+    ballSpeedX = initialBallSpeedX;
+    ballSpeedY = initialBallSpeedY;
+
+}
+function resetgame() {
+    player1Score = 0;
+    player2Score = 0;
+    document.getElementById("player1Score").textContent = "Player 1: 0";
+    document.getElementById("player2Score").textContent = "Player 2: 0";
+    resetballposition();
+}
 
 
 if (ballPositionY + ball.offsetHeight >= screenHeight) {
@@ -223,25 +239,23 @@ if (ballPositionY + ball.offsetHeight >= screenHeight) {
       player1Score++;
       document.getElementById("player1Score").textContent = "Player 1: " + player1Score;
   }
-
   if (player1Score >= winningScore || player2Score >= winningScore) {
-      player1Score = 0;
-      player2Score = 0;
-      document.getElementById("player1Score").textContent = "Player 1: 0";
-      document.getElementById("player2Score").textContent = "Player 2: 0";
-      
-      ballPositionX = initialBallPositionX;
-      ballPositionY = initialBallPositionY;
-      ballSpeedX = initialBallSpeedX;
-      ballSpeedY = initialBallSpeedY;
-  } 
-  else {
-      ballPositionX = initialBallPositionX;
-      ballPositionY = initialBallPositionY;
-      
-      ballSpeedX = initialBallSpeedX;
-      ballSpeedY = initialBallSpeedY;
-  }
+    if (player1Score >= winningScore || player2Score >= winningScore) {
+        let winner = "";
+        if (player1Score > player2Score) {
+            winner = "Player 1";
+        } else {
+            winner = "Player 2";
+        }
+        const playAgain = confirm(`${winner} wins! Do you want to play again?`);
+        if (playAgain) {
+            resetgame(); 
+        } 
+    }
+
+} else {
+    resetballposition();
+}
 }
   ball.style.left = ballPositionX + "px";
   ball.style.top = ballPositionY + "px";
