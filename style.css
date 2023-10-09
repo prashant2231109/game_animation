@@ -14,7 +14,7 @@ section{
    bottom:0;
    margin-top:24%;
     left:50px;
-    height:268px;
+    height:160px;
     width: 134px;
   
 }
@@ -22,11 +22,21 @@ section{
         position:absolute;
         bottom:0px;
         right:50px;
-        height:268px;
+        height:160px;
         width: 134px;
        
     
 }
+h2{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    color: rgb(223, 123, 10);
+    text-align: center;
+    background-color: blue;
+    
+}
+
 #net{
     position:absolute;
     bottom: 0;
@@ -63,7 +73,7 @@ section{
 #buttons {
     display:flex;
     justify-content:center;
-    margin-top:5%;
+    /* margin-top:5%; */
     font-size: 18px;
     padding: 10px 20px;
     background-color: #007bff;
