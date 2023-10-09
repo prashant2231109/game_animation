@@ -1,16 +1,17 @@
 const character = document.getElementById("character");
 const net = document.getElementById("net");
-const moveSpeed = 15;
+const moveSpeed = 20;
 let characterleftPosition = 60;
 const screenWidth = (window.innerWidth) / 2.15;
 const characterWidth = character.clientWidth;
 let player1Score = 0;
 let player2Score = 0;
-const winningScore = 10; 
+const winningScore = 5; 
 const collisionsound = document.getElementById("collisionSound");
 const jumpsound = document.getElementById("jump");
 const pointersound = document.getElementById("point");
 const headhitsound = document.getElementById("headsound");
+const gameoverSound = document.getElementById("gameOver");
 function playjumpsound() {
     jumpsound.currentTime = 0;
     jumpsound.play();
@@ -19,6 +20,7 @@ function playcollisionsound() {
     collisionsound.currentTime = 0;
     collisionsound.play();
 }
+
 function playpointersound() {
     pointersound.currentTime = 0;
     pointersound.play();
@@ -26,6 +28,10 @@ function playpointersound() {
 function headsounds() {
     headhitsound.currentTime = 0;
     headhitsound.play();
+}
+function gameoversound() {
+    gameoverSound.currentTime = 0;
+    gameoverSound.play();
 }
 function moveCharacterForward() {
     if (characterleftPosition + characterWidth + moveSpeed <= screenWidth) {
@@ -149,8 +155,8 @@ const screenWidth1 = window.innerWidth;
 const screenHeight = window.innerHeight;
 
 
-const minPositionX = 0;
-const maxPositionX = screenWidth1;
+const minPositionX = 10;
+const maxPositionX = screenWidth1 - 10;
 let randomPositionX = Math.random() * (maxPositionX - minPositionX) + minPositionX;
 
 
@@ -160,25 +166,24 @@ const initialBallPositionY = 0;
 let ballPositionX = initialBallPositionX; 
 let ballPositionY = initialBallPositionY;
 
-//main game function
+
 function updateBallPosition() {
     if (isGamePaused) {
         return; 
     }
-
-    // const maxBallSpeed = 12;
-    // if (Math.abs(ballSpeedX) > maxBallSpeed) {
-    //     ballSpeedX = maxBallSpeed * Math.sign(ballSpeedX);
-    // }
-    // if (Math.abs(ballSpeedY) > maxBallSpeed) {
-    //     ballSpeedY = maxBallSpeed * Math.sign(ballSpeedY);
-    // }
+    const maxBallSpeed = 12;
+    if (Math.abs(ballSpeedX) > maxBallSpeed) {
+        ballSpeedX = maxBallSpeed * Math.sign(ballSpeedX);
+    }
+    if (Math.abs(ballSpeedY) > maxBallSpeed) {
+        ballSpeedY = maxBallSpeed * Math.sign(ballSpeedY);
+    }
     ballPositionX += ballSpeedX;
     ballPositionY += ballSpeedY;
     
 
 
-    if (ballPositionX + ball.offsetWidth >= screenWidth1-50 || ballPositionX <= 10) {
+    if (ballPositionX + ball.offsetWidth >= screenWidth1 - 80 || ballPositionX <= 10) {
         ballSpeedX = -ballSpeedX * 1.05;
     }
     if (ballPositionY + ball.offsetHeight >= screenHeight || ballPositionY <= 0) {
@@ -266,8 +271,8 @@ function updateBallPosition() {
         ballSpeedX = direction * (Math.abs(ballSpeedX) + 0.2); 
     }
     function resetballposition() {
-        randomPositionX = Math.random() * (maxPositionX - minPositionX) + minPositionX;
-        initialBallPositionX = randomPositionX;
+        randomPositionX = Math.random() * (maxPositionX - minPositionX);
+        initialBallPositionX = randomPositionX +30;
         ballPositionX = initialBallPositionX;
         ballPositionY = initialBallPositionY;
         ballSpeedX = initialBallSpeedX;
@@ -295,8 +300,9 @@ function updateBallPosition() {
             document.getElementById("player1Score").textContent = "Player 1: " + player1Score;
         }
 
-        if (player1Score >= winningScore || player2Score >= winningScore) {
+        
             if (player1Score >= winningScore || player2Score >= winningScore) {
+                gameoversound();
                 let winner = "";
                 if (player1Score > player2Score) {
                     winner = "Player 1";
@@ -310,7 +316,7 @@ function updateBallPosition() {
                 // }
             }
 
-        } else {
+         else {
             resetballposition();
         }
     }
@@ -348,7 +354,7 @@ function resetgames() {
     player2Score = 0;
     document.getElementById("player1Score").textContent = "Player 1: 0";
     document.getElementById("player2Score").textContent = "Player 2: 0";
-    randomPositionX = Math.random() * (maxPositionX - minPositionX) + minPositionX + 5;
+    randomPositionX = Math.random() * (maxPositionX - minPositionX);
     initialBallPositionX = randomPositionX;
     ballPositionX = initialBallPositionX;
     ballPositionY = initialBallPositionY;
