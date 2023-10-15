@@ -266,8 +266,6 @@ function updateBallPosition() {
            
             playcollisionsound();
             ballSpeedY = Math.abs(ballSpeedY) * 1.5;
-            
-
         }
 
 
@@ -330,7 +328,7 @@ function updateBallPosition() {
     ball.style.top = ballPositionY + "px";
     requestAnimationFrame(updateBallPosition);
 }
-// 
+
 const startButton = document.getElementById("startButton");
 const pauseButton = document.getElementById("stopButton");
 const resetButton = document.getElementById("resetButton");
