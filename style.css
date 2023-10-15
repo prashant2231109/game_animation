@@ -1,14 +1,11 @@
 section{
     position: absolute;
-    background-image: url("bg.jpeg");
+    background-image: url("./assets/bg.jpeg");
     background-size: cover;
     height:100vh;
     width:100vw;
-    
     bottom:0px;
-    
 }
-
 #character{
     position:absolute;
    bottom:0;
@@ -16,7 +13,7 @@ section{
     left:50px;
     height:160px;
     width: 134px;
-  
+ 
 } 
 #character1{
         position:absolute;
